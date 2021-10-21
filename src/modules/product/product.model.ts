@@ -24,8 +24,8 @@ export enum TypeProduct {
   PEN
 }
 
-export interface ProductModel extends Base, TimeStamps {}
-export class ProductModel {
+export interface ProductModel extends Base {}
+export class ProductModel extends TimeStamps {
   @prop({required: true})
   title: string;
 
