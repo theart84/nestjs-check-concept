@@ -9,7 +9,7 @@ export class ProductController {
   }
 
   @Post()
-  create(@Body(new ValidationPipe()) body: CreateProductDto) {
+  create(@Body() body: CreateProductDto) {
     return this.productService.create(body);
   }
 }
