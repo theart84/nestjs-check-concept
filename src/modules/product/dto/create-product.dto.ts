@@ -55,7 +55,6 @@ export class CreateProductDto {
   type: TypeProduct;
 
   @ApiProperty()
-  @IsArray()
   @IsString({each: true})
   categories: string[];
 }
