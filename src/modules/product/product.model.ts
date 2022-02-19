@@ -1,43 +1,44 @@
-import {prop} from '@typegoose/typegoose';
-import {Base, TimeStamps} from '@typegoose/typegoose/lib/defaultClasses';
-
+/* eslint-disable @typescript-eslint/no-empty-interface */
+import { index, prop } from '@typegoose/typegoose';
+import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 export class DescriptionDetail {
   @prop()
   color: string;
 
   @prop()
-  details: string
+  details: string;
 }
 
 export class Description {
-  @prop({type: () => DescriptionDetail, _id: false})
+  @prop({ type: () => DescriptionDetail, _id: false })
   ru: DescriptionDetail;
 
-  @prop({type: () => DescriptionDetail, _id: false})
+  @prop({ type: () => DescriptionDetail, _id: false })
   en: DescriptionDetail;
 }
 
 export enum TypeProduct {
   PENCIL,
   ERASER,
-  PEN
+  PEN,
 }
 
 export interface ProductModel extends Base {}
+@index({ title: 'text' })
 export class ProductModel extends TimeStamps {
-  @prop({required: true})
+  @prop({ required: true })
   title: string;
 
-  @prop({type: () => Description, _id: false})
+  @prop({ type: () => Description, _id: false })
   description: Description;
 
   @prop()
   price: number;
 
-  @prop({enum: TypeProduct, type: Number})
+  @prop({ enum: TypeProduct, type: Number })
   type: TypeProduct;
 
-  @prop({type: () => [String]})
-  categories: string[]
+  @prop({ type: () => [String] })
+  categories: string[];
 }
