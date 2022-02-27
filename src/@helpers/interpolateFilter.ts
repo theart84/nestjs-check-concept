@@ -10,14 +10,17 @@ const hashOperators = {
   contains: '$regex',
 };
 
-export const interpolateFilter = (value: IWhere[]) => {
+export const interpolateFilter = (value: string[]) => {
   if (value.length > 1) {
     return value.reduce(
       (acc, prev) => {
-        const splitKey = Object.keys(prev)[0].split('_');
+        const convertStringToObject = JSON.parse(prev);
+        const splitKey = Object.keys(convertStringToObject)[0].split('_');
         acc.$and.push({
           [splitKey[0]]: {
-            [hashOperators[splitKey[1]]]: Object.values(prev)[0],
+            [hashOperators[splitKey[1]]]: Object.values(
+              convertStringToObject,
+            )[0],
           },
         });
         return acc;
@@ -25,10 +28,11 @@ export const interpolateFilter = (value: IWhere[]) => {
       { $and: [] },
     );
   } else {
-    const splitKey = Object.keys(value[0])[0].split('_');
+    const convertStringToObject = JSON.parse(value[0]);
+    const splitKey = Object.keys(convertStringToObject)[0].split('_');
     return {
       [splitKey[0]]: {
-        [hashOperators[splitKey[1]]]: Object.values(value[0])[0],
+        [hashOperators[splitKey[1]]]: Object.values(convertStringToObject)[0],
       },
     };
   }
